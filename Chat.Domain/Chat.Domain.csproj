@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Chat.Common\Chat.Common.csproj" />
     <ProjectReference Include="..\Chat.Models\Chat.Model.csproj" />
-    <ProjectReference Include="..\Chat.Utils\Chat.Common.csproj" />
   </ItemGroup>
 
 </Project>

@@ -5,8 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Chat.Domain\Chat.Domain.csproj" />
-    <ProjectReference Include="..\Chat.Service\Chat.Infraestructure.csproj" />
   </ItemGroup>
 
 </Project>
