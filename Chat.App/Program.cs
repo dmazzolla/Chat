@@ -12,19 +12,23 @@ using RabbitMQ.Client.Events;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace Chat.App
 {
     class Program
     {
+        private static int _qttyMembers = 0;        
         static void Main(string[] args)
         {
-            var serviceProvider = new ServiceCollection()
+            ServiceProvider serviceProvider = new ServiceCollection()
                     .AddSingleton<IRabbitMQConn, RabbitMQConn>()
                     .AddSingleton<IRabbitMQWrapper, RabbitMQWrapper>()
                     .AddSingleton<IRestSharpWrapper, RestSharpWrapper>()
                     .AddSingleton<IChatService, ChatService>()
                .BuildServiceProvider();
+
+            WriteWelcomeMessage();
 
             string msg = serviceProvider.GetService<IChatService>().CreateVhostChat();
             if (msg.IsNotNullOrEmptyOrWhiteSpace())
@@ -33,49 +37,52 @@ namespace Chat.App
                 Environment.Exit(-1);
             }
 
+            WriteAlphanumericFormatNickNameMessage();
+
             List<User> lstMembers = serviceProvider.GetService<IChatService>().GetUsers();
-            Console.WriteLine(Messages.UsersChat);
-            Console.WriteLine(string.Empty);
-            foreach (var item in lstMembers)
-            {
-                Console.WriteLine(item.NickName);
-            }
-            
-            Console.WriteLine(string.Empty);
+            User user = ReadNickName(lstMembers);
+            lstMembers.Add(user);
+            _qttyMembers = lstMembers.Count;
 
-            User user;
+            WriteSamplesSendMessage(user);
+
+            WriteMembersChat(lstMembers);
+
+            IRabbitMQWrapper serviceChat = serviceProvider.GetService<IRabbitMQWrapper>();
+
+            serviceChat.Listen(user.NickName).Received += ListenIncomingMessages;
+
+            new Timer(ListenCheckNewUsers, serviceProvider, 60000, 60000);
+
+            ListenSendMessages(serviceProvider, user, serviceChat);
+        }
+
+
+
+        #region InterfaceSupportFunctions
+
+        //  Todas estas funções estão vinculadas a interface gráfica e foram criadas apenas 
+        //com o objetivo de organização do código da classe Main do console application.
+        //  Para análise dos padrões aplicados no projeto, verfiquem a Solution como um todo.
+
+        private static void ListenCheckNewUsers(object o)
+        {
+            ServiceProvider serviceProvider = (ServiceProvider)o;
+
+            var members = serviceProvider.GetService<IChatService>().GetUsers();
+            int qttyMembers = members.Count;
+
+            if (_qttyMembers != qttyMembers)
+            {
+                WriteMembersChat(members, true);
+                _qttyMembers = qttyMembers;
+            }
+        }
+
+        private static void ListenSendMessages(ServiceProvider serviceProvider, User user, IRabbitMQWrapper serviceChat)
+        {
             while (true)
             {
-                Console.WriteLine(Messages.EnterYourNickname);
-                user = new User(Console.ReadLine());
-                try
-                {
-                    user.Validate();
-                    user.ValidateWithMembers(lstMembers);
-                    break;
-                }
-                catch (InvalidOperationException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    Console.WriteLine(string.Empty);
-                    continue;
-                }
-            }
-            
-            Console.WriteLine(string.Empty);
-            Console.WriteLine(string.Format(Messages.UserWelcome, user.NickName));
-            Console.WriteLine(string.Empty);
-            Console.WriteLine(Messages.ExamplesSendMsg);
-            Console.WriteLine(Messages.ExamplePrivateMsg);
-            Console.WriteLine(Messages.ExamplePublicMsg);
-            Console.WriteLine(string.Empty);
-
-            var chat = serviceProvider.GetService<IRabbitMQWrapper>();
-
-            chat.Listen(user.NickName).Received += Received;
-
-            while (true)
-            {                
                 ChatMessage chatMessage = new ChatMessage(Console.ReadLine(), user.NickName, serviceProvider.GetService<IChatService>().GetUsers());
                 try
                 {
@@ -88,17 +95,104 @@ namespace Chat.App
                     continue;
                 }
 
-                chat.Submit(chatMessage);
+                serviceChat.Submit(chatMessage);
                 Console.WriteLine(string.Empty);
             }
         }
 
-        private static void Received(object sender, BasicDeliverEventArgs e)
+        private static void WriteSamplesSendMessage(User user)
         {
-            MsgChatModel msg = JsonConvert.DeserializeObject<MsgChatModel>(Encoding.UTF8.GetString(e.Body.ToArray()));
-            string to = msg.IsPublic ? Messages.ForAll : Messages.ForYou;
-            Console.WriteLine($"{msg.From.Nick} {Messages.Said} {to}: {msg.Message}");
+            Console.WriteLine(string.Empty);
+            Console.WriteLine(string.Format(Messages.UserWelcome, user.NickName));
+            Console.WriteLine(string.Empty);
+            Console.WriteLine(Messages.ExamplesSendMsg);
+            Console.WriteLine(Messages.ExamplePrivateMsg);
+            Console.WriteLine(Messages.ExamplePublicMsg);
             Console.WriteLine(string.Empty);
         }
+
+        private static User ReadNickName(List<User> lstMembers)
+        {
+            User user;
+            while (true)
+            {
+                Console.WriteLine(Messages.EnterYourNickname);
+                user = new User(Console.ReadLine().EnsureAlphaNumeric().ToUpper());
+                try
+                {
+                    user.Validate();
+                    user.ValidateNewUserInMembersList(lstMembers);
+                    break;
+                }
+                catch (InvalidOperationException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    Console.WriteLine(string.Empty);
+                    continue;
+                }
+            }
+
+            return user;
+        }
+
+        private static void WriteAlphanumericFormatNickNameMessage()
+        {
+            Console.WriteLine(string.Empty);
+            Console.WriteLine(Messages.AlphanumericOnly);
+            Console.WriteLine(string.Empty);
+        }
+
+        private static void WriteMembersChat(List<User> lstMembers, bool newUser = false)
+        {
+            if (lstMembers.Count == 0)
+            {
+                Console.BackgroundColor = ConsoleColor.White;
+                Console.ForegroundColor = ConsoleColor.DarkBlue;
+                Console.WriteLine(Messages.NoUsers);
+                Console.WriteLine(string.Empty);
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.WriteLine(newUser ? Messages.NewUsersChat : Messages.UsersChat);
+                Console.WriteLine(string.Empty);
+                foreach (var item in lstMembers)
+                {
+                    Console.WriteLine(item.NickName);
+                }
+                Console.WriteLine(string.Empty);
+            }
+
+            Console.WriteLine(Messages.EnterMsg);
+            Console.WriteLine(string.Empty);
+        }
+
+        private static void WriteWelcomeMessage()
+        {
+            Console.BackgroundColor = ConsoleColor.Blue;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(Messages.Welcome);
+            Console.WriteLine(string.Empty);
+            Console.ResetColor();
+        }
+
+        private static void ListenIncomingMessages(object sender, BasicDeliverEventArgs e)
+        {
+            string jsonMsg = Encoding.UTF8.GetString(e.Body.ToArray());
+
+            MsgChatModel msg = JsonConvert.DeserializeObject<MsgChatModel>(jsonMsg);
+            string to = msg.IsPublic ? Messages.ForAll : Messages.ForYou;
+
+            if (msg.IsPublic)
+                Console.ForegroundColor = ConsoleColor.Green;
+            else
+                Console.ForegroundColor = ConsoleColor.Yellow;
+
+            Console.WriteLine($"{msg.From.NickName} {Messages.Said} {to}: {msg.Message}");
+            Console.ResetColor();
+            Console.WriteLine(string.Empty);
+        }
+
+        #endregion
     }
 }

@@ -61,6 +61,24 @@ namespace Chat.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Warning: Your Nickname must consist of alphanumeric characters only..
+        /// </summary>
+        public static string AlphanumericOnly {
+            get {
+                return ResourceManager.GetString("AlphanumericOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a message....
+        /// </summary>
+        public static string EnterMsg {
+            get {
+                return ResourceManager.GetString("EnterMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter your nickname:.
         /// </summary>
         public static string EnterYourNickname {
@@ -115,6 +133,24 @@ namespace Chat.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hey... We have new users in Chat:.
+        /// </summary>
+        public static string NewUsersChat {
+            get {
+                return ResourceManager.GetString("NewUsersChat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to What a pity! We don&apos;t have any other users in the chat... Come on... Invite your friends now....
+        /// </summary>
+        public static string NoUsers {
+            get {
+                return ResourceManager.GetString("NoUsers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to said.
         /// </summary>
         public static string Said {
@@ -138,6 +174,15 @@ namespace Chat.Common.Resources {
         public static string UserWelcome {
             get {
                 return ResourceManager.GetString("UserWelcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ========&gt;  Welcome to Chat  &lt;========.
+        /// </summary>
+        public static string Welcome {
+            get {
+                return ResourceManager.GetString("Welcome", resourceCulture);
             }
         }
     }

@@ -61,11 +61,11 @@ namespace Chat.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The recipient is not using Chat at this time..
+        ///   Looks up a localized string similar to Only you are using Chat at moment.
         /// </summary>
-        public static string CheckMemberTo {
+        public static string ChatRoomWithoutMembers {
             get {
-                return ResourceManager.GetString("CheckMemberTo", resourceCulture);
+                return ResourceManager.GetString("ChatRoomWithoutMembers", resourceCulture);
             }
         }
         
@@ -97,20 +97,11 @@ namespace Chat.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chat server not found. Check the configuration file..
+        ///   Looks up a localized string similar to Chat server not found. Check the configuration file or if it&apos;s running..
         /// </summary>
         public static string CreateVhostNotFound {
             get {
                 return ResourceManager.GetString("CreateVhostNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enter a message....
-        /// </summary>
-        public static string EnterMsg {
-            get {
-                return ResourceManager.GetString("EnterMsg", resourceCulture);
             }
         }
         
@@ -124,11 +115,20 @@ namespace Chat.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Only you are using Chat at moment.
+        ///   Looks up a localized string similar to The recipient is not using Chat now..
         /// </summary>
-        public static string OnlyYouChat {
+        public static string RecipientNotFound {
             get {
-                return ResourceManager.GetString("OnlyYouChat", resourceCulture);
+                return ResourceManager.GetString("RecipientNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sender not found.
+        /// </summary>
+        public static string SenderNotFound {
+            get {
+                return ResourceManager.GetString("SenderNotFound", resourceCulture);
             }
         }
         

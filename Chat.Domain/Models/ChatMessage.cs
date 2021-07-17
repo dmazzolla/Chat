@@ -1,4 +1,5 @@
 ﻿using Chat.Common;
+using Chat.Common.Resources;
 using Chat.Domain.Validation;
 using Chat.Model;
 using System;
@@ -14,7 +15,7 @@ namespace Chat.Domain
         {
             From = new User(model.From);
             To = new User(model.To);
-            model.Members.ForEach(x => { Members.Add(new User(x.Nick)); });
+            model.Members.ForEach(x => { Members.Add(new User(x.NickName)); });
             Message = model.Message;
             IsPublic = model.IsPublic;
         }
@@ -55,9 +56,10 @@ namespace Chat.Domain
 
         public void Validate()
         {
+            AssertionConcern.AssertArgumentNotNull(From, Errors.SenderNotFound);
             ChatMessageAssertionConcern.Members(Members);
             ChatMessageAssertionConcern.Message(Message);
-            ChatMessageAssertionConcern.CheckMemberTo(IsPublic, Members, To);
+            ChatMessageAssertionConcern.CheckRecipient(IsPublic, Members, To);
         }
 
         public override bool Equals(object obj)

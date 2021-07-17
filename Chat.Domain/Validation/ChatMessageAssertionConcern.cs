@@ -12,7 +12,7 @@ namespace Chat.Domain.Validation
         {
             if (members == null || members.Count == 0)
             {
-                throw new InvalidOperationException(Errors.OnlyYouChat);
+                throw new InvalidOperationException(Errors.ChatRoomWithoutMembers);
             }
         }
 
@@ -20,15 +20,15 @@ namespace Chat.Domain.Validation
         {
             if (message.IsNullOrEmptyOrWhiteSpace())
             {
-                throw new InvalidOperationException(Errors.EnterMsg);                
+                throw new InvalidOperationException(Messages.EnterMsg);                
             }
         }
 
-        public static void CheckMemberTo(bool isPublic, List<User> members, User to)
+        public static void CheckRecipient(bool isPublic, List<User> members, User to)
         {
             if (!isPublic && members.Where(x => x.NickName.Equals(to.NickName)).Count() == 0)
             {
-                throw new InvalidOperationException(Errors.CheckMemberTo);
+                throw new InvalidOperationException(Errors.RecipientNotFound);
             }
         }
 

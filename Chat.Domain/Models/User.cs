@@ -1,4 +1,5 @@
-﻿using Chat.Domain.Validation;
+﻿using Chat.Common.Resources;
+using Chat.Domain.Validation;
 using Chat.Model;
 using System;
 using System.Collections.Generic;
@@ -16,23 +17,26 @@ namespace Chat.Domain
         }
         public User(UserModel model)
         {
-            NickName = model.Nick;
+            NickName = model.NickName;
         }
         #endregion
 
-        
+
         #region Properties
-        
+
         public string NickName { get; private set; }
 
         #endregion
 
         public void Validate()
         {
+            //AssertionConcern.AssertArgumentNotNull(NickName, Errors.EnterNickName);
             UserAssertionConcern.User(NickName);
+            AssertionConcern.AssertArgumentLength(NickName, 3, 20, Errors.EnterNickName);
+            AssertionConcern.AssertArgumentMatches("^[a-zA-Z][a-zA-Z0-9]*$", NickName, Errors.EnterNickName);
         }
 
-        public void ValidateWithMembers(List<User> lstMembers)
+        public void ValidateNewUserInMembersList(List<User> lstMembers)
         {
             UserAssertionConcern.Members(this, lstMembers);
         }

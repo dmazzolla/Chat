@@ -2,6 +2,6 @@
 {
     public class UserModel
     {
-        public string Nick { get; set; }
+        public string NickName { get; set; }
     }
 }

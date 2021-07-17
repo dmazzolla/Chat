@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace Chat.Common
 {
@@ -79,6 +80,20 @@ namespace Chat.Common
                 input = input + pattern;
 
             return input;
+        }
+
+        /// <summary>
+        /// Garante que a string contenha apenas caracteres alfanuméricos
+        /// </summary>
+        /// <param name="input">String a ser tratada</param>
+        /// <returns></returns>        
+        public static string EnsureAlphaNumeric(this string input)
+        {
+            if (input.IsNullOrEmptyOrWhiteSpace())
+                return String.Empty;
+
+            Regex rgx = new Regex("[^a-zA-Z0-9]");
+            return rgx.Replace(input.Trim(), "");
         }
 
     }

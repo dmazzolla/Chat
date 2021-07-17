@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AlphanumericOnly" xml:space="preserve">
+    <value>Warning: Your Nickname must consist of alphanumeric characters only.</value>
+  </data>
+  <data name="EnterMsg" xml:space="preserve">
+    <value>Enter a message...</value>
+  </data>
   <data name="EnterYourNickname" xml:space="preserve">
     <value>Enter your nickname:</value>
   </data>
@@ -135,6 +141,12 @@
   <data name="ForYou" xml:space="preserve">
     <value>for you</value>
   </data>
+  <data name="NewUsersChat" xml:space="preserve">
+    <value>Hey... We have new users in Chat:</value>
+  </data>
+  <data name="NoUsers" xml:space="preserve">
+    <value>What a pity! We don't have any other users in the chat... Come on... Invite your friends now...</value>
+  </data>
   <data name="Said" xml:space="preserve">
     <value>said</value>
   </data>
@@ -143,5 +155,8 @@
   </data>
   <data name="UserWelcome" xml:space="preserve">
     <value>Welcome {0}!</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>========&gt;  Welcome to Chat  &lt;========</value>
   </data>
 </root>

@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CheckMemberTo" xml:space="preserve">
-    <value>O destinatário apontado não está utilizando o Chat neste momento.</value>
+  <data name="ChatRoomWithoutMembers" xml:space="preserve">
+    <value>Apenas você está utilizando o Chat neste momento.</value>
   </data>
   <data name="CreateVhostChatInternalError" xml:space="preserve">
     <value>Ocorreu um erro interno no servidor do chat.</value>
@@ -130,16 +130,16 @@
     <value>O servidor do chat não está respondendo.</value>
   </data>
   <data name="CreateVhostNotFound" xml:space="preserve">
-    <value>O servidor do chat não foi encontrado. Verifique o arquivo de configuração.</value>
-  </data>
-  <data name="EnterMsg" xml:space="preserve">
-    <value>Digite uma mensagem...</value>
+    <value>O servidor do chat não foi encontrado. Verifique o arquivo de configuração ou se está em execução.</value>
   </data>
   <data name="EnterNickName" xml:space="preserve">
     <value>Digite o seu NickName</value>
   </data>
-  <data name="OnlyYouChat" xml:space="preserve">
-    <value>Apenas você está utilizando o Chat neste momento.</value>
+  <data name="RecipientNotFound" xml:space="preserve">
+    <value>O destinatário apontado não está utilizando o Chat neste momento.</value>
+  </data>
+  <data name="SenderNotFound" xml:space="preserve">
+    <value>Remetente não encontrado</value>
   </data>
   <data name="UserMembersValidate" xml:space="preserve">
     <value>Já existe um usuário registrado com este NickName</value>
