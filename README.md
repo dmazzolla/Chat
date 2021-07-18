@@ -8,6 +8,6 @@ docker run -d --hostname rabbitserver --name rabbitmq-server -p 15672:15672 -p 5
 
 
 
-Linha de comando para ativar o Management Plugin (caso ainda não ativo)
+Linha de comando para ativar o Management Plugin (caso ainda não esteja ativo)
 
 rabbitmq-plugins enable rabbitmq_management
