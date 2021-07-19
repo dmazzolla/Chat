@@ -11,7 +11,7 @@ namespace Chat.Domain.Validation
         {
             if (nickName.IsNullOrEmptyOrWhiteSpace())
             {
-                throw new InvalidOperationException(Errors.EnterNickName);
+                throw new InvalidOperationException(Errors.EnterRecipientName);
             }
         }
 

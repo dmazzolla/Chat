@@ -132,14 +132,23 @@
   <data name="CreateVhostNotFound" xml:space="preserve">
     <value>O servidor do chat não foi encontrado. Verifique o arquivo de configuração ou se está em execução.</value>
   </data>
-  <data name="EnterNickName" xml:space="preserve">
+  <data name="EnterRecipientName" xml:space="preserve">
+    <value>Informe o Destinatario</value>
+  </data>
+  <data name="EnterYourNickName" xml:space="preserve">
     <value>Digite o seu NickName</value>
   </data>
-  <data name="RecipientNotFound" xml:space="preserve">
+  <data name="FormatNickName" xml:space="preserve">
+    <value>O NickName deve ser alfanumérico e conter entre 3 e 20 caracteres</value>
+  </data>
+  <data name="RecipientIsntAmongMembers" xml:space="preserve">
     <value>O destinatário apontado não está utilizando o Chat neste momento.</value>
   </data>
+  <data name="RecipientNotFound" xml:space="preserve">
+    <value>Destinatario não informado</value>
+  </data>
   <data name="SenderNotFound" xml:space="preserve">
-    <value>Remetente não encontrado</value>
+    <value>Remetente não informado</value>
   </data>
   <data name="UserMembersValidate" xml:space="preserve">
     <value>Já existe um usuário registrado com este NickName</value>

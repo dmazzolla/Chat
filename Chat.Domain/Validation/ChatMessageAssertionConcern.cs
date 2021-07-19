@@ -8,27 +8,27 @@ namespace Chat.Domain.Validation
 {
     public class ChatMessageAssertionConcern
     {
-        public static void Members(List<User> members)
+        public static void ExistsAnothersMembersInChat(User from, List<User> members)
         {
-            if (members == null || members.Count == 0)
+            if (members == null || members.Where(x => x.NotEquals(from)).Count() == 0)
             {
                 throw new InvalidOperationException(Errors.ChatRoomWithoutMembers);
             }
         }
 
-        public static void Message(string message)
+        public static void MessageHasContent(string message)
         {
             if (message.IsNullOrEmptyOrWhiteSpace())
             {
-                throw new InvalidOperationException(Messages.EnterMsg);                
+                throw new InvalidOperationException(Messages.EnterMsg);
             }
         }
 
-        public static void CheckRecipient(bool isPublic, List<User> members, User to)
+        public static void RecipientIsAmongMembers(User to, List<User> members)
         {
-            if (!isPublic && members.Where(x => x.NickName.Equals(to.NickName)).Count() == 0)
+            if (members.Where(x => x.Equals(to)).Count() == 0)
             {
-                throw new InvalidOperationException(Errors.RecipientNotFound);
+                throw new InvalidOperationException(Errors.RecipientIsntAmongMembers);
             }
         }
 

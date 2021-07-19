@@ -62,9 +62,9 @@ namespace Chat.Business.Services
                 {
                     lstMembers.Add(new User(item.Name));
 
-                    //tentar limpar os usuários (queues) que estão inativos há mais de 10 minutos...
-                    if (DateTime.UtcNow.AddMinutes(-10) > item.IdleSince)
-                        _restSharpWrapper.ExecutRequest($"queues/{ConfigurationManager.AppSettings["RabbitMQVHost"]}", RestSharp.Method.DELETE, item.Name);
+                    ////tentar limpar os usuários (queues) que estão inativos há mais de 10 minutos...
+                    //if (DateTime.UtcNow.AddMinutes(-10) > item.IdleSince)
+                    //    _restSharpWrapper.ExecutRequest($"queues/{ConfigurationManager.AppSettings["RabbitMQVHost"]}", RestSharp.Method.DELETE, item.Name);
                 }                
             }
             return lstMembers;

@@ -2,7 +2,7 @@
 
 namespace Chat.Model
 {
-    public class MsgChatModel
+    public class ChatMessageModel
     {
         public UserModel From { get;  set; }
         public UserModel To { get;  set; }

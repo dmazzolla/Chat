@@ -1,4 +1,5 @@
-﻿using Chat.Common.Resources;
+﻿using Chat.Common;
+using Chat.Common.Resources;
 using Chat.Domain.Validation;
 using Chat.Model;
 using System;
@@ -13,7 +14,7 @@ namespace Chat.Domain
 
         public User(string nickName)
         {
-            NickName = nickName;
+            NickName = nickName.EnsureAlphaNumeric().ToUpper();
         }
         public User(UserModel model)
         {
@@ -32,8 +33,8 @@ namespace Chat.Domain
         {
             //AssertionConcern.AssertArgumentNotNull(NickName, Errors.EnterNickName);
             UserAssertionConcern.User(NickName);
-            AssertionConcern.AssertArgumentLength(NickName, 3, 20, Errors.EnterNickName);
-            AssertionConcern.AssertArgumentMatches("^[a-zA-Z][a-zA-Z0-9]*$", NickName, Errors.EnterNickName);
+            AssertionConcern.AssertArgumentLength(NickName, 3, 20, Errors.FormatNickName);
+            AssertionConcern.AssertArgumentMatches("^[a-zA-Z][a-zA-Z0-9]*$", NickName, Errors.FormatNickName);
         }
 
         public void ValidateNewUserInMembersList(List<User> lstMembers)

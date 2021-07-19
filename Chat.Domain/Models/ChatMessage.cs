@@ -11,11 +11,14 @@ namespace Chat.Domain
     {
         #region Ctor
 
-        public ChatMessage(MsgChatModel model)
+        public ChatMessage(ChatMessageModel model)
         {
             From = new User(model.From);
             To = new User(model.To);
+
+            Members = new List<User>();
             model.Members.ForEach(x => { Members.Add(new User(x.NickName)); });
+
             Message = model.Message;
             IsPublic = model.IsPublic;
         }
@@ -34,12 +37,13 @@ namespace Chat.Domain
             string[] split = userInput.Split("=>");
             Message = split[0];
 
-            User to = (split.Length > 1 && split[1].IsNotNullOrEmptyOrWhiteSpace()) ? new User(split[1]) : null;
+            //User to = (split.Length > 1 && split[1].IsNotNullOrEmptyOrWhiteSpace()) ? new User(split[1]) : null;
+            User to = split.Length > 1 ? new User(split[1]) : null;
             IsPublic = (to == null);
 
             To = to;
             From = new User(from);
-            Members = members;                          
+            Members = members;
         }
 
         #endregion
@@ -51,15 +55,22 @@ namespace Chat.Domain
         public List<User> Members { get; private set; }
         public string Message { get; private set; }
         public bool IsPublic { get; private set; }
-
+        public bool IsPrivate => !IsPublic;
         #endregion
 
         public void Validate()
         {
             AssertionConcern.AssertArgumentNotNull(From, Errors.SenderNotFound);
-            ChatMessageAssertionConcern.Members(Members);
-            ChatMessageAssertionConcern.Message(Message);
-            ChatMessageAssertionConcern.CheckRecipient(IsPublic, Members, To);
+            From.Validate();
+            if (IsPrivate)
+            {
+                AssertionConcern.AssertArgumentNotNull(To, Errors.RecipientNotFound);
+                To.Validate();                
+            }
+            ChatMessageAssertionConcern.MessageHasContent(Message);
+            ChatMessageAssertionConcern.ExistsAnothersMembersInChat(From, Members);            
+            if (IsPrivate)
+                ChatMessageAssertionConcern.RecipientIsAmongMembers(To, Members);
         }
 
         public override bool Equals(object obj)

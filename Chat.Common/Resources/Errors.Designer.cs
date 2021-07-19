@@ -106,16 +106,43 @@ namespace Chat.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter recipient name.
+        /// </summary>
+        public static string EnterRecipientName {
+            get {
+                return ResourceManager.GetString("EnterRecipientName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter your NickName.
         /// </summary>
-        public static string EnterNickName {
+        public static string EnterYourNickName {
             get {
-                return ResourceManager.GetString("EnterNickName", resourceCulture);
+                return ResourceManager.GetString("EnterYourNickName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The NickName must be alphanumeric and contain between 3 and 20 characters..
+        /// </summary>
+        public static string FormatNickName {
+            get {
+                return ResourceManager.GetString("FormatNickName", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to The recipient is not using Chat now..
+        /// </summary>
+        public static string RecipientIsntAmongMembers {
+            get {
+                return ResourceManager.GetString("RecipientIsntAmongMembers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recipient not found.
         /// </summary>
         public static string RecipientNotFound {
             get {

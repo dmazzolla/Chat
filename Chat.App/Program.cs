@@ -52,7 +52,7 @@ namespace Chat.App
 
             serviceChat.Listen(user.NickName).Received += ListenIncomingMessages;
 
-            new Timer(ListenCheckNewUsers, serviceProvider, 60000, 60000);
+            new Timer(ListenNewMembers, serviceProvider, 0, 60000);
 
             ListenSendMessages(serviceProvider, user, serviceChat);
         }
@@ -61,11 +61,7 @@ namespace Chat.App
 
         #region InterfaceSupportFunctions
 
-        //  Todas estas funções estão vinculadas a interface gráfica e foram criadas apenas 
-        //com o objetivo de organização do código da classe Main do console application.
-        //  Para análise dos padrões aplicados no projeto, verfiquem a Solution como um todo.
-
-        private static void ListenCheckNewUsers(object o)
+        private static void ListenNewMembers(object o)
         {
             ServiceProvider serviceProvider = (ServiceProvider)o;
 
@@ -149,11 +145,11 @@ namespace Chat.App
                 Console.BackgroundColor = ConsoleColor.White;
                 Console.ForegroundColor = ConsoleColor.DarkBlue;
                 Console.WriteLine(Messages.NoUsers);
-                Console.WriteLine(string.Empty);
-                Console.ResetColor();
+                Console.WriteLine(string.Empty);                
             }
             else
             {
+                Console.ForegroundColor = ConsoleColor.Magenta;
                 Console.WriteLine(newUser ? Messages.NewUsersChat : Messages.UsersChat);
                 Console.WriteLine(string.Empty);
                 foreach (var item in lstMembers)
@@ -162,7 +158,7 @@ namespace Chat.App
                 }
                 Console.WriteLine(string.Empty);
             }
-
+            Console.ResetColor();
             Console.WriteLine(Messages.EnterMsg);
             Console.WriteLine(string.Empty);
         }
@@ -180,7 +176,7 @@ namespace Chat.App
         {
             string jsonMsg = Encoding.UTF8.GetString(e.Body.ToArray());
 
-            MsgChatModel msg = JsonConvert.DeserializeObject<MsgChatModel>(jsonMsg);
+            ChatMessageModel msg = JsonConvert.DeserializeObject<ChatMessageModel>(jsonMsg);
             string to = msg.IsPublic ? Messages.ForAll : Messages.ForYou;
 
             if (msg.IsPublic)

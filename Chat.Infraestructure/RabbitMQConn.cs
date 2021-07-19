@@ -11,8 +11,10 @@ namespace Chat.Infraestructure
         {
             ConnectionFactory connectionFactory = new ConnectionFactory
             {
-                HostName = ConfigurationManager.AppSettings["RabbitMQConn"], 
-                VirtualHost = ConfigurationManager.AppSettings["RabbitMQVHost"]
+                HostName = ConfigurationManager.AppSettings["RabbitMQConn"],
+                VirtualHost = ConfigurationManager.AppSettings["RabbitMQVHost"],
+                UserName = ConfigurationManager.AppSettings["RabbitMQUser"],
+                Password = ConfigurationManager.AppSettings["RabbitMQPassword"],
             };
             Conn = connectionFactory;
         }

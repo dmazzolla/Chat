@@ -132,11 +132,20 @@
   <data name="CreateVhostNotFound" xml:space="preserve">
     <value>Chat server not found. Check the configuration file or if it's running.</value>
   </data>
-  <data name="EnterNickName" xml:space="preserve">
+  <data name="EnterRecipientName" xml:space="preserve">
+    <value>Enter recipient name</value>
+  </data>
+  <data name="EnterYourNickName" xml:space="preserve">
     <value>Enter your NickName</value>
   </data>
-  <data name="RecipientNotFound" xml:space="preserve">
+  <data name="FormatNickName" xml:space="preserve">
+    <value>The NickName must be alphanumeric and contain between 3 and 20 characters.</value>
+  </data>
+  <data name="RecipientIsntAmongMembers" xml:space="preserve">
     <value>The recipient is not using Chat now.</value>
+  </data>
+  <data name="RecipientNotFound" xml:space="preserve">
+    <value>Recipient not found</value>
   </data>
   <data name="SenderNotFound" xml:space="preserve">
     <value>Sender not found</value>
