@@ -1,5 +1,7 @@
 # Chat - RabbitMQ - C# .NET Core - Console Application
 
+![Captura de Tela 2021-07-18 às 22 59 59](https://user-images.githubusercontent.com/8203988/126093482-9f7f1d08-23c0-4d54-8830-c32bb8d94bcc.png)
+
 
 ## 🚀 Começando
 
